@@ -8,16 +8,30 @@ const authOptions = NextAuth({
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET
+            clientSecret: process.env.GOOGLE_SECRET,
+            authorization: {
+                params: {
+                    scope: 'read:user user:email',
+                },
+            }
         }),
         GitHubProvider({
             clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
+            clientSecret: process.env.GITHUB_SECRET,
+            authorization: {
+                params: {
+                    scope: 'read:user user:email',
+                },
+            }
         })
     ],
     callbacks: {
         async signIn({ user, account }) {
             try {
+                if (!user.email) {
+                    console.log("Email not provided by GitHub.");
+                    return false; // GitHub sometimes doesn't return email
+                }
                 //DataBase Connection
                 await handleDBConnection();
                 const currentUser = await User.findOne({ email: user.email });
