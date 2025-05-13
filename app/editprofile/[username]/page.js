@@ -22,7 +22,7 @@ export async function generateMetadata({ params }) {
 
 }
 
-const page = async ({ params }) => {
+const Page = async ({ params }) => {
     const { username } = await params;
     await handleDBConnection();
 
@@ -35,5 +35,5 @@ const page = async ({ params }) => {
     )
 }
 
-export default page
+export default Page
 

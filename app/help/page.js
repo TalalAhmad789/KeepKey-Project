@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify';
 
 
-const page = () => {
+const Page = () => {
   const { data: session, status } = useSession()
   const router = useRouter();
 
@@ -26,7 +26,7 @@ const page = () => {
         theme: "dark",
       });
     }
-  }, [session, router])
+  }, [session, router, status])
 
   return (
     <>
@@ -113,5 +113,5 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
 

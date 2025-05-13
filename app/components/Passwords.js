@@ -32,7 +32,7 @@ const Passwords = () => {
                     theme: "dark",
                   });
         }
-    }, [session, router])
+    }, [session, router, status])
 
     useEffect(() => {
         if (session) {

@@ -35,7 +35,7 @@ const Profile = () => {
         theme: "dark",
       });
     }
-  }, [session, router]);
+  }, [session, router, status]);
 
   useEffect(() => {
     getData();

@@ -4,7 +4,7 @@ import { useSession, signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
-const page = () => {
+const Page = () => {
   const { data: session, status } = useSession()
   const router = useRouter();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -36,7 +36,7 @@ const page = () => {
         <div className='bg-gray-100 w-full max-w-md border-2 border-gray-600 p-6 rounded-md mx-4 shadow-lg'>
           <div className='text-2xl font-bold flex justify-center items-center gap-2'>
             <div><span className='text-black'>Keep</span><span className='text-red-500'>Key</span></div>
-            <Image width={35} height={35} src="/logo.gif" alt="Logo" />
+            <Image unoptimized width={35} height={35} src="/logo.gif" alt="Logo" />
           </div>
 
           <h2 className='text-center font-bold text-lg mt-4'>Sign in to KeepKey</h2>
@@ -63,6 +63,6 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
 
 

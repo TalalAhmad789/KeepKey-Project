@@ -9,7 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import Image from 'next/image'
 
 const Navbar = () => {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const pathName = usePathname();
     const [showDropDown, setShowDropDown] = useState(false)
     const [hamburgerToggle, setHamburgerToggle] = useState(false)
