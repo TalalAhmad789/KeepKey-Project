@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { FaLock } from "react-icons/fa";
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
@@ -21,16 +21,16 @@ const Passwords = () => {
         if (status === "loading") return;
         if (!session) {
             router.push('/');
-             toast.success('Logout Successfully!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                  });
+            toast.success('Logout Successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     }, [session, router, status])
 
@@ -38,17 +38,17 @@ const Passwords = () => {
         if (session) {
             getData();
         }
-    }, [session])
+    }, [session, getData])
 
     const [password, setPassword] = useState({ webUrl: "", userName: "", passWord: "", id: uuidv4() });
     const [passwordArray, setPasswordArray] = useState([]);
     const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm();
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         const daTa = await getForm(session.user.email);
         setPasswordArray(daTa);
-    }
+    }, [session?.user?.email]);
 
     const handleDelay = async (d) => {
         await new Promise((resolve, reject) => {
@@ -148,7 +148,7 @@ const Passwords = () => {
                         <span className="text-red-500">Key</span>
                     </div>
                     <div>
-                        <Image width={50} height={50} src="/logo.gif" alt="Logo"/>
+                        <Image width={50} height={50} src="/logo.gif" alt="Logo" />
                     </div>
                 </div>
 

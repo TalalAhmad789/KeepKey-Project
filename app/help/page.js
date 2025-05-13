@@ -54,7 +54,7 @@ const Page = () => {
             <div>
               <h3 className="font-bold text-gray-700">🔐 How do I save a password?</h3>
               <p className="text-gray-600">
-                Go to the main page, enter your website URL, username, and password, then click "Save Password".
+                Go to the main page, enter your website URL, username, and password, then click &quot;Save Password&quot;.
               </p>
             </div>
 

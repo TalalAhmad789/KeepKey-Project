@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { fetchUser, updateProfile } from '../actions/useractions'
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
@@ -18,22 +18,18 @@ const EditProfile = () => {
         if (status === "loading") return;
         if (!session) {
             router.push('/');
-             toast.success('Logout Successfully!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "dark",
-                  });
+            toast.success('Logout Successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     }, [session, router, status])
-
-    useEffect(() => {
-        getData();
-    }, [session])
 
     const handleDelay = async (d) => {
         await new Promise((resolve, reject) => {
@@ -43,10 +39,10 @@ const EditProfile = () => {
         })
     }
 
-    const [form, setForm] = useState({ firName: "", lastName: "", tagline: "", city: "", country: "", about: ""});
+    const [form, setForm] = useState({ firName: "", lastName: "", tagline: "", city: "", country: "", about: "" });
     const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm();
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         if (!session || !session.user) return;
         let res = await fetchUser(session.user.email);
         setForm({
@@ -56,8 +52,12 @@ const EditProfile = () => {
             city: res.city || "",
             country: res.country || "",
             about: res.about || "",
-        })
-    }
+        });
+    }, [session]);
+
+    useEffect(() => {
+        getData();
+    }, [getData])
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });

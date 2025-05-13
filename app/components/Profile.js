@@ -38,21 +38,20 @@ const Profile = () => {
   }, [session, router, status]);
 
   useEffect(() => {
+    const getData = async () => {
+      if (!session?.user) return;
+      const res = await fetchUser(session.user.email);
+      setForm({
+        firName: res.firName || "",
+        lastName: res.lastName || "",
+        tagline: res.tagline || "",
+        city: res.city || "",
+        country: res.country || "",
+        about: res.about || "",
+      });
+    };
     getData();
   }, [session]);
-
-  const getData = async () => {
-    if (!session?.user) return;
-    const res = await fetchUser(session.user.email);
-    setForm({
-      firName: res.firName || "",
-      lastName: res.lastName || "",
-      tagline: res.tagline || "",
-      city: res.city || "",
-      country: res.country || "",
-      about: res.about || "",
-    });
-  }
 
   return (
     <>
